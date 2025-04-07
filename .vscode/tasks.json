@@ -1,0 +1,118 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+
+        // Task(s) for the Development Environment
+
+        {
+            "label": "get-chibios",
+            "type": "shell",
+            "command": "[ -d ${workspaceFolder}/ChibiOS ] || git clone https://github.com/ChibiOS/ChibiOS.git ${workspaceFolder}/project/ChibiOS",
+            "problemMatcher": [],
+            "detail": "Get (clone) the ChibiOS repository from Github",
+            "runOptions": {
+                "reevaluateOnRerun": false
+            }
+        },
+        {
+            "label": "update-chibios",
+            "type": "shell",
+            "command": "[ -d ${workspaceFolder}/ChibiOS ] || git clone https://github.com/ChibiOS/ChibiOS.git ${workspaceFolder}/project/ChibiOS; cd ${workspaceFolder}/project/ChibiOS && git reset --hard && git pull",
+            "problemMatcher": [],
+            "detail": "Update (reset and pull) the latest version of ChibiOS from Github",
+            "runOptions": {
+                "reevaluateOnRerun": true
+            }
+        },
+        {
+            "label": "clean",
+            "type": "shell",
+            "command": "rm -rf ${workspaceFolder}/project/.dep ${workspaceFolder}/project/build",
+            "options": {
+                "cwd": "${workspaceFolder}/project"
+            },
+            "group": {
+                "kind": "build"
+            },
+            "problemMatcher": [],
+            "detail": "Clean build files"
+        },
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "make -C ${workspaceFolder}/project",
+            "args": [],
+            "options": {
+                "cwd": "${workspaceFolder}/project"
+            },
+            "group": {
+                "kind": "build"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "detail": "Build the project"
+        },
+        {
+            "label": "flash",
+            "type": "shell",
+            "command": "pkill -9 openocd || true; openocd -f board/st_nucleo_f4.cfg -f interface/stlink.cfg & sleep 2 && gdb-multiarch ${workspaceFolder}/project/build/ch.elf -ex \"set confirm off\" -ex \"set pagination off\" -ex \"target extended-remote localhost:3333\" -ex \"load\" -ex \"monitor reset\" -ex \"quit\" ",
+            "options": {
+                "cwd": "${workspaceFolder}/project"
+            },
+            "group": "build",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "detail": "Flash the build file(s) to the chip"
+        },
+        {
+            "label": "rebuild",
+            "dependsOn": [
+                "clean",
+                "build"
+            ],
+            "dependsOrder": "sequence",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Rebuild (clean and build) the project"
+        },
+        {
+            "label": "rebuild and flash",
+            "dependsOn": [
+                "clean",
+                "build",
+                "flash"
+            ],
+            "dependsOrder": "sequence",
+            "group": {
+                "kind": "build"
+            },
+            "detail": "Rebuild (clean and build) and flash the project to the chip"
+        },
+
+        // Task(s) for Windows Host OS
+
+        {
+            "label": "Connect USB device to Devcontainer (ONLY Windows Host OS as Administrator)",
+            "type": "shell",
+            "command": "${workspaceFolder}\\.vscode\\scripts\\docker-wsl-usb\\RUN.bat",
+            "options": {
+                "cwd": "${workspaceFolder}\\.vscode\\scripts\\docker-wsl-usb"
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false
+            },
+            "problemMatcher": []
+        }
+
+
+    ]
+}
+

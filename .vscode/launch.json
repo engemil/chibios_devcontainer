@@ -1,0 +1,44 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Cortex Debug",
+            "type": "cortex-debug",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/project",
+            "executable": "${workspaceFolder}/project/build/ch.elf",
+            "servertype": "openocd",
+            "device": "STM32F4", // Update this to your exact chip if needed, e.g. STM32F401RE
+            "configFiles": [
+                "interface/stlink.cfg",
+                "board/st_nucleo_f4.cfg"
+            ],
+            "preLaunchTask": "build",
+            "svdFile": "${workspaceFolder}/project/STM32F401.svd", // Optional: If you want register view (something...STM32F4xx.svd)
+            "openOCDLaunchCommands": [],
+            "openOCDPreConfigLaunchCommands": [],
+            "showDevDebugOutput": "none"
+        },
+        {
+            "name": "Rebuild and Debug",
+            "type": "cortex-debug",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/project",
+            "executable": "${workspaceFolder}/project/build/ch.elf",
+            "servertype": "openocd",
+            "device": "STM32F4", // Adjust as needed
+            "configFiles": [
+                "interface/stlink.cfg",
+                "board/st_nucleo_f4.cfg"
+            ],
+            "preLaunchTask": "rebuild",
+            "svdFile": "${workspaceFolder}/project/STM32F401.svd", // Optional: If you want register view (something...STM32F4xx.svd)
+            "openOCDLaunchCommands": [],
+            "openOCDPreConfigLaunchCommands": [],
+            "showDevDebugOutput": "none"
+        }
+    ]
+}
