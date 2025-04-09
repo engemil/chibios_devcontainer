@@ -11,14 +11,6 @@ Folders:
 - `.vscode` - VS Code tasks and debug (launch) related files.
 - `project` - Example project for the NUCLEO64-F401RE board.
 
-
-To adapt for new hardware look into these places for change:
-- `project`-folder (specific for NUCLEO64-F401RE board)
-- `.vscode/launch.json` (specific for openocd and gdb-multiarch, and for NUCLEO64-F401RE board)
-- `.vscode/tasks.json` (specific for openocd and gdb-multiarch)
-- `.devcontainer/Dockerfile` (Adds make, gcc-arm-none-eabi, openocd, and gdb-multiarch)
-
-
 ## Prerequisites
 
 - **VS Code** (https://code.visualstudio.com/)
@@ -26,6 +18,25 @@ To adapt for new hardware look into these places for change:
 - **Docker** (https://www.docker.com/)
 
 Confirmed working on host computer OS: **Ubuntu 24.04** and **Windows 11** (check notes under _Additonal Notes_)
+
+
+## HOW-TO Configure
+
+To start a new project, you simply:
+- Replace the content in `project`-folder with your project.
+    - Recommend to use any of the demos available in https://github.com/ChibiOS/ChibiOS
+- Change values in `.vscode/settings.json` for your chip.
+    - For OpenOCD interface, board, and device configuration, look into `/usr/share/openocd/scripts/interface/`, `/usr/share/openocd/scripts/board/`, and  `/usr/share/openocd/scripts/target`
+    - You will find .svd-files available from the chip manufacturer webpage(s).
+
+
+**NB!** This setup is configured for using `gcc-arm-none-eabi`, `openocd`, and `gdb-multiarch`. If you plan to customize the development environment, look into these folders:
+- `.vscode/`
+- `.devcontainer/`
+
+
+
+
 
 ## Additional Notes
 
@@ -80,6 +91,7 @@ Confirmed working on host computer OS: **Ubuntu 24.04** and **Windows 11** (chec
 - Are tasks (from `.vscode/tasks.json`) running slow?
     - Move this project-folder to the WSL file system, e.g. `\\wsl.localhost\Ubuntu\home\engemil\my_projects`
     - VS Code can open folders in the WSL file system and start up a devcontainer. This way, it will run fast.
+    - More info: https://learn.microsoft.com/en-us/windows/wsl/filesystems#file-storage-and-performance-across-file-systems
 
 </details>
 
