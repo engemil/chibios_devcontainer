@@ -1,0 +1,7 @@
+{
+    "settings.project.compiledElfFile": "${workspaceFolder}/project/build/ch.elf", // The path to the compiled .elf file for your project (e.g. "/workspace/project/build/ch.elf")
+    "settings.project.svdFile": "${workspaceFolder}/project/STM32F401.svd", // (Optional) .svd file (e.g. "/workspace/project7STM32F401.svd")
+    "settings.openocd.interface": "interface/stlink.cfg", // OpenOCD Debugger interface file (e.g. "interface/stlink.cfg")
+    "settings.openocd.board": "board/st_nucleo_f4.cfg", // (Optional) OpenOCD Board file (e.g. "board/st_nucleo_f4.cfg") (NB! If removed, remove in launch.json and tasks.json aswell)
+    "settings.project.deviceSeries": "STM32F4", // Chip family name (e.g. "STM32F4") (TODO: check if it should be target/stm32f4x.cfg instead?)
+}

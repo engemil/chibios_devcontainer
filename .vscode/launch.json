@@ -9,15 +9,15 @@
             "type": "cortex-debug",
             "request": "launch",
             "cwd": "${workspaceFolder}/project",
-            "executable": "${workspaceFolder}/project/build/ch.elf",
+            "executable": "${config:settings.project.compiledElfFile}",
             "servertype": "openocd",
-            "device": "STM32F4", // Update this to your exact chip if needed, e.g. STM32F401RE
+            "device": "${config:settings.project.deviceSeries}",
             "configFiles": [
-                "interface/stlink.cfg",
-                "board/st_nucleo_f4.cfg"
+                "{config:settings.openocd.interface}",
+                "{config:settings.openocd.board}" // Optional
             ],
             "preLaunchTask": "build",
-            "svdFile": "${workspaceFolder}/project/STM32F401.svd", // Optional: If you want register view (something...STM32F4xx.svd)
+            "svdFile": "{config:settings.project.svdFile}", // Optional
             "openOCDLaunchCommands": [],
             "openOCDPreConfigLaunchCommands": [],
             "showDevDebugOutput": "none"
@@ -27,15 +27,15 @@
             "type": "cortex-debug",
             "request": "launch",
             "cwd": "${workspaceFolder}/project",
-            "executable": "${workspaceFolder}/project/build/ch.elf",
+            "executable": "${config:settings.project.compiledElfFile}",
             "servertype": "openocd",
-            "device": "STM32F4", // Adjust as needed
+            "device": "${config:settings.project.deviceSeries}",
             "configFiles": [
-                "interface/stlink.cfg",
-                "board/st_nucleo_f4.cfg"
+                "{config:settings.openocd.interface}",
+                "{config:settings.openocd.board}" // Optional
             ],
             "preLaunchTask": "rebuild",
-            "svdFile": "${workspaceFolder}/project/STM32F401.svd", // Optional: If you want register view (something...STM32F4xx.svd)
+            "svdFile": "{config:settings.project.svdFile}", // Optional
             "openOCDLaunchCommands": [],
             "openOCDPreConfigLaunchCommands": [],
             "showDevDebugOutput": "none"

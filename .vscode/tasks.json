@@ -58,7 +58,7 @@
         {
             "label": "flash",
             "type": "shell",
-            "command": "pkill -9 openocd || true; openocd -f board/st_nucleo_f4.cfg -f interface/stlink.cfg & sleep 2 && gdb-multiarch ${workspaceFolder}/project/build/ch.elf -ex \"set confirm off\" -ex \"set pagination off\" -ex \"target extended-remote localhost:3333\" -ex \"load\" -ex \"monitor reset\" -ex \"quit\" ",
+            "command": "pkill -9 openocd || true; openocd -f ${config:settings.openocd.board} -f ${config:settings.openocd.interface} & sleep 2 && gdb-multiarch ${config:settings.project.compiledElfFile} -ex \"set confirm off\" -ex \"set pagination off\" -ex \"target extended-remote localhost:3333\" -ex \"load\" -ex \"monitor reset\" -ex \"quit\" ",
             "options": {
                 "cwd": "${workspaceFolder}/project"
             },
