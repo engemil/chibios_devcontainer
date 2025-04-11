@@ -13,11 +13,11 @@
             "servertype": "openocd",
             "device": "${config:settings.project.deviceSeries}",
             "configFiles": [
-                "{config:settings.openocd.interface}",
-                "{config:settings.openocd.board}" // Optional
+                "${config:settings.openocd.interface}",
+                "${config:settings.openocd.board}" // Optional
             ],
             "preLaunchTask": "build",
-            "svdFile": "{config:settings.project.svdFile}", // Optional
+            "svdFile": "${config:settings.project.svdFile}", // Optional
             "openOCDLaunchCommands": [],
             "openOCDPreConfigLaunchCommands": [],
             "showDevDebugOutput": "none"
@@ -31,11 +31,11 @@
             "servertype": "openocd",
             "device": "${config:settings.project.deviceSeries}",
             "configFiles": [
-                "{config:settings.openocd.interface}",
-                "{config:settings.openocd.board}" // Optional
+                "${config:settings.openocd.interface}",
+                "${config:settings.openocd.board}" // Optional
             ],
             "preLaunchTask": "rebuild",
-            "svdFile": "{config:settings.project.svdFile}", // Optional
+            "svdFile": "${config:settings.project.svdFile}", // Optional
             "openOCDLaunchCommands": [],
             "openOCDPreConfigLaunchCommands": [],
             "showDevDebugOutput": "none"
