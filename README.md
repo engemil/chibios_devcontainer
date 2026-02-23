@@ -10,12 +10,14 @@ Folders:
 - `.devcontainer` - Docker and devcontainer related files.
 - `.vscode` - VS Code tasks and debug (launch) related files.
 - `project` - Example project for the NUCLEO64-F401RE board.
+- `scripts` - Script (linux) files.
 
 ## Prerequisites
 
 - **VS Code** (https://code.visualstudio.com/)
 - VS Code extension **Dev Containers** (https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 - **Docker** (https://www.docker.com/)
+- (For linux) Run `scripts/udevusb_stlink.sh` to setup access for ST-Links.
 
 Confirmed working on host computer OS: **Ubuntu 24.04** and **Windows 11** (check notes under _Additonal Notes_)
 
