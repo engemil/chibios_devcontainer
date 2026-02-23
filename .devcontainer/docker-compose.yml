@@ -13,5 +13,5 @@ services:
     #devices:
     #  - "/dev/bus/usb/:/dev/bus/usb"
     volumes:
-      - ..:/workspace:cached # To be able to spin up from devcontainers # Wierd build message: http2: server: error reading preface from client //./pipe/docker_engine: file has already been closed
+      - ../:/workspace:cached # To be able to spin up from devcontainers
       - /dev:/dev #
