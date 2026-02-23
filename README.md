@@ -19,12 +19,20 @@ Folders:
 
 Confirmed working on host computer OS: **Ubuntu 24.04** and **Windows 11** (check notes under _Additonal Notes_)
 
+## Setup Repository
 
-## HOW-TO Configure
+```bash
+git clone https://github.com/engemil/chibios_devcontainer.git
+cd chibios_devcontainer
+git submodule update --init --recursive
+```
+
+## HOW-TO Setup
 
 To start a new project, you simply:
 - Replace the content in `project`-folder with your project.
     - Recommend to use any of the demos available in https://github.com/ChibiOS/ChibiOS
+- Update **ChibiOS** submodule (or add new and point the `Makefile` to it).
 - Change values in `.vscode/settings.json` for your chip.
     - For OpenOCD interface, board, and device configuration, look into `/usr/share/openocd/scripts/interface/`, `/usr/share/openocd/scripts/board/`, and  `/usr/share/openocd/scripts/target`
     - You will find .svd-files available from the chip manufacturer webpage(s).
