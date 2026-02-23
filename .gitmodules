@@ -1,0 +1,4 @@
+[submodule "ChibiOS_stable_21.11.x"]
+	path = ChibiOS_stable_21.11.x
+	url = https://github.com/engemil/chibios
+	branch = stable_21.11.x
