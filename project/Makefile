@@ -86,10 +86,10 @@ endif
 PROJECT = ch
 
 # Target settings.
-MCU  = cortex-m4
+MCU  = cortex-m0plus
 
 # Imported source files and paths.
-CHIBIOS  := ./ChibiOS
+CHIBIOS  := ../ChibiOS_stable_21.11.x
 CONFDIR  := ./cfg
 BUILDDIR := ./build
 DEPDIR   := ./.dep
@@ -97,25 +97,28 @@ DEPDIR   := ./.dep
 # Licensing files.
 include $(CHIBIOS)/os/license/license.mk
 # Startup files.
-include $(CHIBIOS)/os/common/startup/ARMCMx/compilers/GCC/mk/startup_stm32f4xx.mk
+include $(CHIBIOS)/os/common/startup/ARMCMx/compilers/GCC/mk/startup_stm32c0xx.mk
 # HAL-OSAL files (optional).
 include $(CHIBIOS)/os/hal/hal.mk
-include $(CHIBIOS)/os/hal/ports/STM32/STM32F4xx/platform.mk
-include $(CHIBIOS)/os/hal/boards/ST_NUCLEO64_F401RE/board.mk
+include $(CHIBIOS)/os/hal/ports/STM32/STM32C0xx/platform.mk
+include $(CHIBIOS)/os/hal/boards/ST_NUCLEO64_C071RB/board.mk
 include $(CHIBIOS)/os/hal/osal/rt-nil/osal.mk
 # RTOS files (optional).
 include $(CHIBIOS)/os/rt/rt.mk
 include $(CHIBIOS)/os/common/ports/ARMv7-M/compilers/GCC/mk/port.mk
 # Auto-build files in ./source recursively.
 include $(CHIBIOS)/tools/mk/autobuild.mk
-# Other files (optional).
-include $(CHIBIOS)/os/test/test.mk
-include $(CHIBIOS)/test/rt/rt_test.mk
-include $(CHIBIOS)/test/oslib/oslib_test.mk
+
+# Stream files (optional).
 include $(CHIBIOS)/os/hal/lib/streams/streams.mk
 
+# ChibOS test files (optional).
+#include $(CHIBIOS)/os/test/test.mk
+#include $(CHIBIOS)/test/rt/rt_test.mk
+#include $(CHIBIOS)/test/oslib/oslib_test.mk
+
 # Define linker script file here.
-LDSCRIPT= $(STARTUPLD)/STM32F401xE.ld
+LDSCRIPT= $(STARTUPLD)/STM32C071xB.ld
 
 # C sources that can be compiled in ARM or THUMB mode depending on the global
 # setting.
@@ -137,7 +140,7 @@ ASMXSRC = $(ALLXASMSRC)
 INCDIR = $(CONFDIR) $(ALLINC) $(TESTINC)
 
 # Define C warning options here.
-CWARN = -Wall -Wextra -Wundef -Wstrict-prototypes
+CWARN = -Wall -Wextra -Wundef -Wstrict-prototypes -Wcast-align=strict
 
 # Define C++ warning options here.
 CPPWARN = -Wall -Wextra -Wundef

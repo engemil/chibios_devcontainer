@@ -8,10 +8,10 @@
             "name": "Cortex Debug",
             "type": "cortex-debug",
             "request": "launch",
-            "cwd": "${workspaceFolder}/project",
+            "cwd": "${config:settings.project.folder}",
             "executable": "${config:settings.project.compiledElfFile}",
             "servertype": "openocd",
-            "device": "${config:settings.project.deviceSeries}",
+            "device": "${config:settings.project.device}",
             "configFiles": [
                 "${config:settings.openocd.interface}",
                 "${config:settings.openocd.board}" // Optional
@@ -26,10 +26,10 @@
             "name": "Rebuild and Debug",
             "type": "cortex-debug",
             "request": "launch",
-            "cwd": "${workspaceFolder}/project",
+            "cwd": "${config:settings.project.folder}",
             "executable": "${config:settings.project.compiledElfFile}",
             "servertype": "openocd",
-            "device": "${config:settings.project.deviceSeries}",
+            "device": "${config:settings.project.device}",
             "configFiles": [
                 "${config:settings.openocd.interface}",
                 "${config:settings.openocd.board}" // Optional
