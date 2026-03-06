@@ -3,6 +3,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile # The path to our Dockerfile
+      args:
+          USER_UID: ${UID:-1000}
+          USER_GID: ${GID:-1000}
     command: /bin/bash
     tty: true
     privileged: true

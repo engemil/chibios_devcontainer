@@ -5,6 +5,7 @@
     "shutdownAction": "none",
     "workspaceFolder": "/workspace",
     "remoteUser": "engemil",
+    "updateRemoteUserUID": false,
     "customizations": {
         "vscode": {
             "extensions": [

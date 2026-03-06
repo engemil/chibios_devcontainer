@@ -1,46 +1,43 @@
 FROM ubuntu:24.04
 
-# TO DO: Adjust the following as needed for your development environment
-# - Get host OS user UID/GID and set them as build args to avoid permission issues with mounted volumes
-
 # Avoid interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Install any additional tools you might want
-RUN apt update
+RUN apt-get update
 
 # Install 
-RUN apt install git -y
-RUN apt install build-essential -y
-#RUN apt install make -y 
-RUN apt install gcc-arm-none-eabi -y
-#RUN apt install binutils-arm-none-eabi -y
-#RUN apt install gdb -y
-RUN apt install gdb-multiarch -y
-#RUN apt install stlink-tools -y
-#RUN apt install openocd -y
-RUN apt install minicom -y
-RUN apt install usbutils -y 
-#RUN apt install dfu-util -y
-RUN apt install sudo -y
+RUN apt-get install git -y
+RUN apt-get install build-essential -y
+#RUN apt-get install make -y 
+RUN apt-get install gcc-arm-none-eabi -y
+#RUN apt-get install binutils-arm-none-eabi -y
+#RUN apt-get install gdb -y
+RUN apt-get install gdb-multiarch -y
+#RUN apt-get install stlink-tools -y
+#RUN apt-get install openocd -y
+RUN apt-get install minicom -y
+RUN apt-get install usbutils -y 
+#RUN apt-get install dfu-util -y
+RUN apt-get install sudo -y
 
 # Additional dependencies for stlink and openocd from source
-RUN apt install cmake -y
-RUN apt install python3 -y
-RUN apt install autoconf -y
-RUN apt install automake -y
-RUN apt install libtool -y
-RUN apt install pkg-config -y
-RUN apt install libusb-1.0-0-dev -y
-RUN apt install libhidapi-dev -y
-RUN apt install libftdi-dev -y
-RUN apt install libftdi1 -y
-RUN apt install libjim-dev -y
+RUN apt-get install cmake -y
+RUN apt-get install python3 -y
+RUN apt-get install autoconf -y
+RUN apt-get install automake -y
+RUN apt-get install libtool -y
+RUN apt-get install pkg-config -y
+RUN apt-get install libusb-1.0-0-dev -y
+RUN apt-get install libhidapi-dev -y
+RUN apt-get install libftdi-dev -y
+RUN apt-get install libftdi1 -y
+RUN apt-get install libjim-dev -y
 
 
 # stlink (open-source version) from source
-#RUN sudo apt remove stlink-tools -y
-#RUN sudo apt autoremove -y
+#RUN sudo apt-get remove stlink-tools -y
+#RUN sudo apt-get autoremove -y
 run mkdir -p /tmp
 WORKDIR /tmp
 RUN git clone https://github.com/stlink-org/stlink.git
@@ -68,29 +65,32 @@ RUN make install
 
 # Prepare User
 ARG USERNAME=engemil
+ARG USER_UID=1000
+ARG USER_GID=1000
 
-# Remove default ubuntu user if exists, to clear UID/GID conflicts
-RUN userdel -r ubuntu || true
-# Create the group first to avoid "group already exists" error
-RUN groupadd $USERNAME
-# Create user 'engemil' with home directory and bash shell
-RUN useradd -m -s /bin/bash -g $USERNAME $USERNAME
+# Remove any existing user/group that occupies the target UID/GID
+RUN EXISTING_USER=$(getent passwd $USER_UID | cut -d: -f1) && \
+    if [ -n "$EXISTING_USER" ]; then userdel -r "$EXISTING_USER"; fi || true
+RUN EXISTING_GROUP=$(getent group $USER_GID | cut -d: -f1) && \
+    if [ -n "$EXISTING_GROUP" ]; then groupdel "$EXISTING_GROUP"; fi || true
+# Create the group with the host GID to avoid permission issues with mounted volumes
+RUN groupadd --gid $USER_GID $USERNAME
+# Create user with the host UID/GID so file ownership matches the host OS
+RUN useradd -m -s /bin/bash --uid $USER_UID --gid $USER_GID $USERNAME
 # Add user to sudo group
 RUN usermod -aG sudo $USERNAME
 # Allow passwordless sudo (typical for dev containers)
-RUN echo "engemil ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+RUN echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 # RUN AS USER FROM HERE
 USER $USERNAME
 
-RUN sudo apt install curl -y
+RUN sudo apt-get install curl -y
 RUN sudo curl -fsSL https://opencode.ai/install | bash
-#RUN echo 'export PATH="/home/engemil/.local/bin:$PATH"' >> /home/$USERNAME/.bashrc && source /home/$USERNAME/.bashrc
-RUN sudo echo 'export PATH="/home/engemil/.local/bin:$PATH"' >> /home/$USERNAME/.bashrc
 
 
 # Clean up
-#RUN rm -rf /var/lib/apt/lists/*
+#RUN rm -rf /var/lib/apt-get/lists/*
 
 # Make workspace directory
 RUN sudo mkdir /workspace && sudo chown $USERNAME:$USERNAME /workspace
